@@ -1,6 +1,7 @@
 import Express, { NextFunction, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import timedout from 'connect-timeout'
+import { transactionsUpload } from './routes/uploadSingle'
 
 dotenv.config()
 
@@ -8,7 +9,7 @@ export const app = Express()
 
 app.use(Express.json())
 app.use(haltOnTimedout)
-
+app.use(transactionsUpload)
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const messageError = {
