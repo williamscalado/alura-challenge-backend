@@ -3,7 +3,7 @@ import { sequelizeDb } from "../../../config/db";
 import { IUploadDbData } from "../../../domain/uploadCsv";
 
 
-export const uploadDb = sequelizeDb.define<Model<IUploadDbData>>('transactionUpload',{
+export const uploadDb = sequelizeDb.define<Model<IUploadDbData>>('transactionUpload', {
     id: {
         type: INTEGER,
         autoIncrement: true,
