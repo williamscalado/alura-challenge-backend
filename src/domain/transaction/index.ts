@@ -12,3 +12,7 @@ export interface ITransactionData {
     createAt: Date    
 }
 
+export interface ITrasactionsUseCase {
+    verifyFileupload: (fileName: string)  => void
+}
+
