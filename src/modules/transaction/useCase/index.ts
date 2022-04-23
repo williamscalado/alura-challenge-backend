@@ -3,9 +3,12 @@ import fs from "fs";
 import { parse } from 'csv-parse';
 import { pathUpload } from "../../../config/upload";
 import path from "path";
+import { unlinkFile } from "../../../helpers/util";
 
 
 const verifyFileupload = (fileName: string) => {
+
+
 
     const transactionData = new Promise((resolve, reject) => {
 
@@ -21,7 +24,11 @@ const verifyFileupload = (fileName: string) => {
 
                 for (const [key, value] of Object.entries(data)) {
 
-                    if (!value) { fileData.splice(0, fileData.length); reject('Files with invalid data, send another') }
+                    if (!value) {
+                        fileData.splice(0, fileData.length);
+                        unlinkFile(fileCSV)
+                        reject('File with invalid data, send another')
+                    }
                     dataLineCsv[keyCSV[+key]] = value
                 }
                 fileData.push(dataLineCsv)
@@ -32,13 +39,16 @@ const verifyFileupload = (fileName: string) => {
             .on('end', () => {
 
                 const firstDateLine = new Date(fileData[0].dateTimerTrasaction).toLocaleDateString()
+
                 const findDiferentDates = fileData.find(({ dateTimerTrasaction }) => {
                     const dtArray = new Date(dateTimerTrasaction).toLocaleDateString();
                     return dtArray !== firstDateLine
                 })
 
-                if (findDiferentDates) { reject('File cannot have more than one day of transactions') }
-
+                if (findDiferentDates) {
+                    unlinkFile(fileCSV)
+                    reject('File cannot have more than one day of transactions')
+                }
 
                 resolve(fileData)
 
