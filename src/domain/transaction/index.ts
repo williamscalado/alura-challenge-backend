@@ -9,10 +9,24 @@ export interface ITransactionData {
     destAccount: string,
     transactionAmount: string,
     dateTimerTrasaction: Date,
-    createAt: Date    
+    createAt: Date,
+    [key: string]: any   
 }
 
+export enum keyCSV {
+    "origBank" = 0,
+    "origBranch" = 1,
+    "origAccount" = 2,
+    "destBank" = 3,
+    "destBranch" = 4,
+    "destAccount" = 5,
+    "transactionAmount" = 6,
+    "dateTimerTrasaction" = 7
+}
+
+export interface ITransactionDataRead extends Omit<ITransactionData, "id" | "createAt"> { }
+
 export interface ITrasactionsUseCase {
-    verifyFileupload: (fileName: string)  => void
+    verifyFileupload:  (fileName: string)  => Promise<ITransactionDataRead[]> | any
 }
 

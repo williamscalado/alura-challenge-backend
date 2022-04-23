@@ -4,11 +4,11 @@ import path from "path"
 import crypto from 'crypto'
 
 
-export const pahtUpload = path.join(__dirname, '../../assets/upload')
+export const pathUpload = path.join(__dirname, '../../assets/upload')
 
 const uploadConfig = multer.diskStorage({
     destination: function (req: Request, file, cb: CallableFunction) {
-        cb(null, pahtUpload)
+        cb(null, pathUpload)
     },
     filename: function (req: Request, file, cb: CallableFunction) {
 
@@ -21,9 +21,6 @@ const uploadConfig = multer.diskStorage({
         const fullNameFile = `${name}${Date.now()}.${extFile}`
 
         cb(null, fullNameFile)
-
-
-
     }
 })
 
