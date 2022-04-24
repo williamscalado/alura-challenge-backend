@@ -3,7 +3,7 @@ import { sequelizeDb } from "../../../config/db";
 import { ITransactionData } from "../../../domain/transaction";
 
 
-const trasactionsDB = sequelizeDb.define<Model<ITransactionData>>('transactions' , {
+export const trasactionsDB = sequelizeDb.define<Model<ITransactionData>>('transactions' , {
     id: {
         type: INTEGER,
         autoIncrement: true,

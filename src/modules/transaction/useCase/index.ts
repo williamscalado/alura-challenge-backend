@@ -3,61 +3,50 @@ import fs from "fs";
 import { parse } from 'csv-parse';
 import { pathUpload } from "../../../config/upload";
 import path from "path";
-import { unlinkFile } from "../../../helpers/util";
 
+// verificar se já exite o dia da transação no banco 
 
 const verifyFileupload = (fileName: string) => {
-
-
 
     const transactionData = new Promise((resolve, reject) => {
 
         const fileCSV = path.join(pathUpload, fileName).toString();
         const fileData: ITransactionDataRead[] = []
         const fileRead = fs.createReadStream(fileCSV)
-
         fileRead
             .pipe(parse())
             .on('data', (data) => {
-
                 const dataLineCsv = {} as ITransactionDataRead
-
                 for (const [key, value] of Object.entries(data)) {
-
-                    if (!value) {
-                        fileData.splice(0, fileData.length);
-                        unlinkFile(fileCSV)
-                        reject('File with invalid data, send another')
-                    }
                     dataLineCsv[keyCSV[+key]] = value
                 }
                 fileData.push(dataLineCsv)
+
             })
             .on('error', function (err) {
                 reject(err.message)
             })
             .on('end', () => {
-
-                const firstDateLine = new Date(fileData[0].dateTimerTrasaction).toLocaleDateString()
-
-                const findDiferentDates = fileData.find(({ dateTimerTrasaction }) => {
-                    const dtArray = new Date(dateTimerTrasaction).toLocaleDateString();
-                    return dtArray !== firstDateLine
+                if (!fileData[0]) {
+                    reject('The file is empty, resend!')
+                }
+                const dataFilter = fileData.filter((response) => {
+                    const firstDateLine = new Date(fileData[0].dateTimerTrasaction).toLocaleDateString()
+                    return firstDateLine == new Date(response.dateTimerTrasaction).toLocaleDateString()
+                })
+                dataFilter.map((data, key) => {
+                    const verifyIsNullField = Object.values(data).every(value => !!value);
+                    if (!verifyIsNullField) {
+                        dataFilter.splice(key, 1)
+                    }
+                    return verifyIsNullField
                 })
 
-                if (findDiferentDates) {
-                    unlinkFile(fileCSV)
-                    reject('File cannot have more than one day of transactions')
-                }
-
-                resolve(fileData)
-
+               resolve(dataFilter)
             })
 
     })
-
     return transactionData;
-
 }
 
 

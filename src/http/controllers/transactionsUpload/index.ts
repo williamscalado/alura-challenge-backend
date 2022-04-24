@@ -7,9 +7,8 @@ export const transactionsUploadController = async (req: Request, res: Response) 
     try {
         if (!req.file) throw 'Upload bad request'
         const nameFile = req.file.filename;        
-        const fileDataCsv = await transactionUseCase.verifyFileupload(nameFile) 
+        const fileDataCsv = await transactionUseCase.verifyFileupload(nameFile)         
         
-
 
         res.status(200).json({
             message: "success",
@@ -17,7 +16,7 @@ export const transactionsUploadController = async (req: Request, res: Response) 
         })
 
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             error: true,
             message: error
         })
