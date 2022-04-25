@@ -9,7 +9,7 @@ const findUser = async (data: Ilogin) => {
     const findUserByEmail = await userRepository.findByEmail(email)
     if(!findUserByEmail) throw 'The email does not exist'
     
-    const passwordHash  = findUserByEmail.getDataValue('password')
+    const passwordHash  = findUserByEmail.password
     const validatePassword = await bcrypt.compare(password, passwordHash)
     if(!validatePassword) throw 'The password is incorrect'
     
