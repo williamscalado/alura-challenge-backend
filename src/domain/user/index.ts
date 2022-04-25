@@ -4,7 +4,8 @@ export interface IUser {
     email: string,
     password: string,
     createAt?: Date,
-    userLevel: number
+    userLevel: number,
+    active?: 1 | 0
 }
 
 export interface IUserData extends Omit<IUser, "id" | "createAt" | "userLevel" | "password"> { }

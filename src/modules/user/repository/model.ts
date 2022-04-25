@@ -1,3 +1,4 @@
+import { BOOLEAN } from "sequelize";
 import { DATE, STRING, INTEGER } from "sequelize";
 import { Model } from "sequelize/types";
 import { sequelizeDb } from "../../../config/db";
@@ -25,11 +26,16 @@ export const userDb = sequelizeDb.define<Model<IUser>>('users', {
     userLevel: {
         type: INTEGER,
         allowNull: false
+    },
+    active: {
+        type: INTEGER,
+        allowNull: true
     }
 
 });
 
 (async () => {
+    await userDb.sync()
     const findAminUser = await userDb.findOne({ where: { userLevel: 1 } })
 
     if (!findAminUser) {
@@ -37,7 +43,9 @@ export const userDb = sequelizeDb.define<Model<IUser>>('users', {
             fullName: 'Admin',
             email: "admin@email.com.br",
             password: "$2b$10$.HnrQ5VEhQD7Bf.g0MvBTeWHHfRc4Y2KP3wtnkI2mypbwIpjtlzmW",
-            userLevel: 1
+            userLevel: 1,
+            active: 1
         });
     }
-})();       
+})();        
+ 
