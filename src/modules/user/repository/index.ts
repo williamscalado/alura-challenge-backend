@@ -18,3 +18,6 @@ const createUser = (data: IUser) =>{
     return userDb.create(data)
 }
 
+export const userRepository = {
+    createUser
+}

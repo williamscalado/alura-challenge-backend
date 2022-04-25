@@ -1,10 +1,10 @@
 import { DATE , STRING , INTEGER  } from "sequelize";
 import { Model } from "sequelize/types";
 import { sequelizeDb } from "../../../config/db";
-import { Iuser } from "../../../domain/user";
+import { IUser } from "../../../domain/user";
 
 
-export const userDb = sequelizeDb.define<Model<Iuser>>('users', {
+export const userDb = sequelizeDb.define<Model<IUser>>('users', {
     id: {
         type: INTEGER,
         autoIncrement: true,

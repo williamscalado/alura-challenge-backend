@@ -3,11 +3,10 @@ import { IMailer, IMailerUseCase } from './contract'
 
 
 const transport = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+  service: 'gmail',
   auth: {
-    user: "fed8e5cc5ea32f",
-    pass: "6693bdfb402814"
+    user: "alurachallenge@gmail.com",
+    pass: "ohasdannezowvyqo"
   }
 });
 
@@ -16,12 +15,17 @@ const transport = nodemailer.createTransport({
 
   const { to, body , subject } = data
   const message = {
-    from: "test@email.com",
+    from: "Allura Challenge",
     to: to,
     subject: subject,
     text: body
   }
-    transport.sendMail(message, (err, info) =>  {return err ? err : info;}
+      transport.sendMail(message, (err, info) =>  {
+      if(err){
+        return err 
+      }
+     return info
+    }
     
   )
 
