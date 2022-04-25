@@ -5,7 +5,8 @@ import path from "path";
 import { pathUpload } from "../../../http/middleware/uploadCsv";
 import { unlinkFile } from '../../../helpers/util'
 
-// verificar se já exite o dia da transação no banco 
+// adiconar no banco se estiver tudo ok
+
 
 const verifyFileupload = (fileName: string) => {
 
