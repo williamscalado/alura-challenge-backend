@@ -1,9 +1,10 @@
+import { STRING } from "sequelize";
 import { DATE, INTEGER, Model } from "sequelize";
 import { sequelizeDb } from "../../../config/db";
-import { IUploadDbData } from "../../../domain/uploadCsv";
+import { IUploadRegisterData } from "../../../domain/transaction";
 
 
-export const uploadDb = sequelizeDb.define<Model<IUploadDbData>>('transactionUpload', {
+export const uploadDb = sequelizeDb.define<Model<IUploadRegisterData>>('transactionUpload', {
     id: {
         type: INTEGER,
         autoIncrement: true,
@@ -18,5 +19,10 @@ export const uploadDb = sequelizeDb.define<Model<IUploadDbData>>('transactionUpl
         type: DATE,
         allowNull: false
 
+    },
+    file: {
+        type: STRING,
+        allowNull: false
     }
 })
+

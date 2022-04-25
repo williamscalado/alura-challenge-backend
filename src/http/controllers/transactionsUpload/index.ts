@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { transactionUseCase } from "../../../modules/transaction/useCase";
+import { transactionUseCase } from "../../../modules/transactionUpload/useCase";
 
 
 export const transactionsUploadController = async (req: Request, res: Response) => {

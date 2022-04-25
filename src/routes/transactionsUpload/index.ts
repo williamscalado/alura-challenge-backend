@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { uploadMulter } from "../../config/upload";
 import { transactionsUploadController } from "../../http/controllers/transactionsUpload";
+import { uploadMulter } from "../../http/middleware/uploadCsv";
 
 export const transactionsUpload = Router();
 

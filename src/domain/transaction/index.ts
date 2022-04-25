@@ -13,6 +13,16 @@ export interface ITransactionData {
     [key: string]: any   
 }
 
+export interface IUploadRegisterData { 
+    id: string,
+    dateUpload: Date,
+    dateTransactions: Date,
+    file: string
+}
+
+
+
+
 export enum keyCSV {
     "origBank" = 0,
     "origBranch" = 1,
@@ -26,7 +36,7 @@ export enum keyCSV {
 
 export interface ITransactionDataRead extends Omit<ITransactionData, "id" | "createAt"> { }
 
-export interface ITrasactionsUseCase {
+export interface ITrasactionsUploadUseCase {
     verifyFileupload:  (fileName: string)  => Promise<ITransactionDataRead[]> | any
 }
 

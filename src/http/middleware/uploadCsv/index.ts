@@ -4,7 +4,7 @@ import path from "path"
 import crypto from 'crypto'
 
 
-export const pathUpload = path.join(__dirname, '../../assets/upload')
+export const pathUpload = path.join(__dirname, '../../../../assets/upload')
 
 const uploadConfig = multer.diskStorage({
     destination: function (req: Request, file, cb: CallableFunction) {
