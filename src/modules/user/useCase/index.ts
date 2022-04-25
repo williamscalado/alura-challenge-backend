@@ -1,10 +1,13 @@
 import { IUser, IUserData, IUserUseCase } from "../../../domain/user"
 import { userRepository } from "../repository"
 import { userDb } from "../repository/model"
-import { email } from '../../../adapters/mailer' 
-const findById = async (id: string) => {
+import { email } from '../../../adapters/mailer'
+import { passwordCript } from "../../../helpers/util"
 
-    const userFind = await userDb.findByPk(id).then((data) => {
+
+const findById = async (id: string) => {
+    await userDb.sync()
+    return await userDb.findByPk(id).then((data) => {
         if (!data) throw 'User not found'
         return data
     })
@@ -21,9 +24,10 @@ const findByEmail = async (email: string) => {
 const createUser = async (data: IUserData) => {
 
     const newPassword = Math.floor(Math.random() * (999999 - 10000) + 10000).toString()
+
     const newData: IUser = {
         ...data,
-        password: newPassword,
+        password: passwordCript(newPassword),
         userLevel: 2
     }
     //
@@ -33,8 +37,8 @@ const createUser = async (data: IUserData) => {
         subject: "Sua senha chegou"
     }
     const findEmail = await findByEmail(newData.email)
-    if(findEmail) throw new Error('Email alread exist')
-    
+    if (findEmail) throw new Error('Email alread exist')
+
     await userRepository.createUser(newData)
     console.log(findEmail)
 
