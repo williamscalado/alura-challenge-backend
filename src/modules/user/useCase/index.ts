@@ -13,7 +13,7 @@ const findById = async (id: string) => {
 
 const findByEmail = async (email: string) => {
 
-    return await userDb.findOne({ where: { email: email } })
+    return await userRepository.findByEmail(email)
 
 }
 
@@ -24,22 +24,23 @@ const createUser = async (data: IUserData) => {
     const newData: IUser = {
         ...data,
         password: newPassword,
-        userLevel: 2,
-        createAt: new Date
-
+        userLevel: 2
     }
-    //await userRepository.createUser(newData)
+    //
     const emailData = {
         to: data.email,
         body: `sua senha é ${newPassword}`,
         subject: "Sua senha chegou"
     }
+    const findEmail = await findByEmail(newData.email)
+    if(findEmail) throw new Error('Email alread exist')
+    
+    await userRepository.createUser(newData)
+    console.log(findEmail)
 
     await email.sendMail(emailData)
 
 
-
-    console.log(newData)
 
 }
 

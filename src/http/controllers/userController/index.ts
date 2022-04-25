@@ -17,9 +17,9 @@ const createUser = async (req: Request, res: Response) => {
         })
 
 
-    } catch (error) {
+    } catch (error: Error | any) {
         res.status(400).json({
-            error
+            error: error.message
         })
     }
 

@@ -23,10 +23,6 @@ export const userDb = sequelizeDb.define<Model<IUser>>('users', {
         type: STRING,
         allowNull: false
     },
-    createAt: {
-        type: DATE,
-        allowNull: false
-    },
    userLevel: {
         type: INTEGER,
         allowNull: false
