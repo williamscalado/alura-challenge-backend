@@ -9,6 +9,6 @@ export const unlinkFile = (file: string) => {
 
 
 export const passwordCript = async (password: string) => {
-    return  (await bcrypt.hash(password , 10)).toString()
+    return  await bcrypt.hash(password , 10)
     
 }

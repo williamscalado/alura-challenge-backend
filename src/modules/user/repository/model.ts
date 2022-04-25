@@ -42,7 +42,7 @@ export const userDb = sequelizeDb.define<Model<IUser>>('users', {
         await userDb.create({
             fullName: 'Admin',
             email: "admin@email.com.br",
-            password: "$2b$10$.HnrQ5VEhQD7Bf.g0MvBTeWHHfRc4Y2KP3wtnkI2mypbwIpjtlzmW",
+            password: "$2b$10$zY2R7n/1Kgvwi9S5k3gb5evvfIqBdy3Xc.jxa1nzAkhP.2wMLsRr2",
             userLevel: 1,
             active: 1
         });
