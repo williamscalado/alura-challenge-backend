@@ -15,6 +15,8 @@ const findById = async (id: string) => {
 
 }
 
+
+
 const findByEmail = async (email: string) => {
     try {
 

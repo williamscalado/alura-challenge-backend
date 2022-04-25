@@ -4,6 +4,10 @@ import { userDb } from "../repository/model"
 import { email } from '../../../adapters/mailer'
 import { passwordCript } from "../../../helpers/util"
 
+const findAdminUser = async () => {
+
+
+}
 
 const findById = async (id: string) => {
     await userDb.sync()
@@ -22,12 +26,13 @@ const findByEmail = async (email: string) => {
 
 
 const createUser = async (data: IUserData) => {
-
+    await findAdminUser()
     const newPassword = Math.floor(Math.random() * (999999 - 10000) + 10000).toString()
-
+    const password = await passwordCript(newPassword)
+    
     const newData: IUser = {
         ...data,
-        password: passwordCript(newPassword),
+        password: password,
         userLevel: 2
     }
     //
@@ -40,7 +45,7 @@ const createUser = async (data: IUserData) => {
     if (findEmail) throw new Error('Email alread exist')
 
     await userRepository.createUser(newData)
-    console.log(findEmail)
+    
 
     await email.sendMail(emailData)
 
