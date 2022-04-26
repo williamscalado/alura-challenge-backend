@@ -1,4 +1,4 @@
-import { IUser, IUserRepository, IUserUseCase } from "../../../domain/user"
+import { IUser } from "../../../domain/user"
 import { userDb } from "../repository/model"
 
 const findById = async (id: string) => {
@@ -13,6 +13,14 @@ const findById = async (id: string) => {
 
 
 
+}
+
+
+const getAllUsers = async (): Promise<any> => {
+
+    await userDb.sync()
+    const result = await userDb.findAll({ where: { userLevel: 2 } })
+    return result
 }
 
 
@@ -45,5 +53,6 @@ const createUser = async (data: IUser) => {
 
 export const userRepository = {
     createUser,
-    findByEmail
+    findByEmail,
+    getAllUsers
 }

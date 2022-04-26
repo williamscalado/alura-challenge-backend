@@ -25,7 +25,22 @@ const createUser = async (req: Request, res: Response) => {
 
 }
 
+const getAllUsers = async (req: Request, res: Response) => {
+
+    try {
+        const result = await userUseCase.getAllUsers()
+        res.status(200).json(result)
+    } catch (error) {
+
+        res.status(400).json({
+            message: 'Users not found'
+        })
+
+    }
+
+}
 
 export const userController = {
-    createUser
+    createUser,
+    getAllUsers
 }

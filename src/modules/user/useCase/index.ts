@@ -1,8 +1,8 @@
-import { IUser, IUserData, IUserUseCase } from "../../../domain/user"
+import { email } from '../../../adapters/mailer'
+import { IUser, IUserData } from "../../../domain/user"
+import { passwordCript } from "../../../helpers/util"
 import { userRepository } from "../repository"
 import { userDb } from "../repository/model"
-import { email } from '../../../adapters/mailer'
-import { passwordCript } from "../../../helpers/util"
 
 
 const findById = async (id: string) => {
@@ -11,6 +11,12 @@ const findById = async (id: string) => {
         if (!data) throw 'User not found'
         return data
     })
+
+}
+
+const getAllUsers = async () => {
+
+    return await userRepository.getAllUsers()
 
 }
 
@@ -43,5 +49,6 @@ const createUser = async (data: IUserData) => {
 
 export const userUseCase = {
     createUser,
-    findById
+    findById,
+    getAllUsers
 }
