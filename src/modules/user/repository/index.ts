@@ -22,12 +22,12 @@ const findByEmail = async (email: string) => {
 
         await userDb.sync()
         const result = await userDb.findOne({ where: { email: email } })
-        if(!result) return false
-        
+        if (!result) return false
+
         const Data: IUser = result.get()
 
         return Data
-        
+
     } catch (error: Error | any) {
 
         throw new Error(error?.message)

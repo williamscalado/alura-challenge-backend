@@ -47,5 +47,4 @@ export const userDb = sequelizeDb.define<Model<IUser>>('users', {
             active: 1
         });
     }
-})();        
- 
+})();

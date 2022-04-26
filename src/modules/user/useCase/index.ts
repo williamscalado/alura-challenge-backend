@@ -15,10 +15,10 @@ const findById = async (id: string) => {
 }
 
 const findByEmail = async (email: string) => await userRepository.findByEmail(email);
- 
+
 
 const createUser = async (data: IUserData) => {
-  
+
     const newPassword = Math.floor(Math.random() * (999999 - 10000) + 10000).toString()
     const password = await passwordCript(newPassword)
 
