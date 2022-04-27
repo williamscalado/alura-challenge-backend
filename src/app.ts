@@ -1,8 +1,8 @@
-import Express, { NextFunction, Request, Response } from 'express'
-import dotenv from 'dotenv'
 import timedout from 'connect-timeout'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import Express, { NextFunction, Request, Response } from 'express'
 import { appRouter } from './routes'
-
 dotenv.config()
 
 
@@ -10,7 +10,7 @@ dotenv.config()
 
 
 export const app = Express()
-
+app.use(cors())
 app.use(timedout('20s'))
 app.use(Express.json())
 app.use(haltOnTimedout)

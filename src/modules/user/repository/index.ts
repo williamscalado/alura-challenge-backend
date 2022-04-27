@@ -19,7 +19,14 @@ const findById = async (id: string) => {
 const getAllUsers = async (): Promise<any> => {
 
     await userDb.sync()
-    const result = await userDb.findAll({ where: { userLevel: 2 } })
+    const result = await userDb.findAll({
+        where: {
+            userLevel: 2
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'password']
+        }
+    })
     return result
 }
 
@@ -29,11 +36,15 @@ const findByEmail = async (email: string) => {
     try {
 
         await userDb.sync()
-        const result = await userDb.findOne({ where: { email: email } })
+        const result = await userDb.findOne({
+            where: {
+                email: email
+            }
+        })
+
         if (!result) return false
 
         const Data: IUser = result.get()
-
         return Data
 
     } catch (error: Error | any) {

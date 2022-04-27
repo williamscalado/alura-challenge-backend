@@ -13,7 +13,7 @@ const loginVerify = async (req: Request, res: Response) => {
             token: result
         })
     } catch (error) {
-        res.status(400).json({
+        res.status(401).json({
             error
         })
     }
