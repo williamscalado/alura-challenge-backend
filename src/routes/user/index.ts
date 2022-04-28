@@ -6,4 +6,4 @@ export const userRouter = Router()
 
 
 userRouter.get('/user', isAuthenticatedVeryfi, userController.getAllUsers)
-userRouter.post('/user', isAuthenticatedVeryfi, userController.createUser)
+userRouter.post('/user', userController.createUser)

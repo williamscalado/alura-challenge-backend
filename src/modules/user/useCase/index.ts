@@ -8,7 +8,7 @@ import { userDb } from "../repository/model"
 const findById = async (id: string) => {
     await userDb.sync()
     return await userDb.findByPk(id).then((data) => {
-        if (!data) throw 'User not found'
+        if (!data) throw 'Nenhum usuário encontrado'
         return data
     })
 
@@ -41,7 +41,7 @@ const createUser = async (data: IUserData) => {
         subject: "Sua senha chegou"
     }
     const findEmail = await findByEmail(newData.email)
-    if (findEmail) throw new Error('Email alread exist')
+    if (findEmail) throw new Error('E-mail já está sendo utilizado!')
 
     await userRepository.createUser(newData)
     await email.sendMail(emailData)

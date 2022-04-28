@@ -12,9 +12,10 @@ const loginVerify = async (req: Request, res: Response) => {
         res.status(200).json({
             token: result
         })
-    } catch (error) {
+    } catch (error: Error | any) {
         res.status(401).json({
-            error
+            error: true,
+            message: error
         })
     }
 }

@@ -10,7 +10,10 @@ export const isAuthenticatedVeryfi = (req: Request, res: Response, next: NextFun
         if (!tokenVerify) throw 'Expired token!'
         next()
     } catch (error) {
-        res.status(401).json(error)
+        res.status(401).json({
+            tokenError: true,
+            error
+        })
     }
 
 }

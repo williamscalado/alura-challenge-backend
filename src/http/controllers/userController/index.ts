@@ -6,20 +6,22 @@ const createUser = async (req: Request, res: Response) => {
     try {
 
         const { email, name } = req.body
-        if (!email || !name) { throw 'Invalid Data user' }
+        if (!email || !name) { throw 'Dados inválidos' }
         const data = {
             fullName: name,
             email
         }
         await userUseCase.createUser(data)
         res.status(200).json({
-            message: "success"
+            error: false,
+            message: "Usuarios criado com sucesso"
         })
 
 
     } catch (error: Error | any) {
         res.status(400).json({
-            error: error.message
+            error: true,
+            message: error.message
         })
     }
 
@@ -33,7 +35,8 @@ const getAllUsers = async (req: Request, res: Response) => {
     } catch (error) {
 
         res.status(400).json({
-            message: 'Users not found'
+            error: true,
+            message: 'Nenhum usuário encontrado'
         })
 
     }
