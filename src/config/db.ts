@@ -5,6 +5,7 @@ const Db = path.join(__dirname, '../data') + '/db.sqlite';
 
 export const sequelizeDb = new Sequelize({
     dialect: 'sqlite',
-    storage: Db
+    storage: Db,
+    logging:  false,
 
 })
