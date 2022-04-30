@@ -1,4 +1,3 @@
-import { BOOLEAN } from "sequelize";
 import { DATE, STRING, INTEGER } from "sequelize";
 import { Model } from "sequelize/types";
 import { sequelizeDb } from "../../../config/db";
@@ -36,7 +35,7 @@ export const userDb = sequelizeDb.define<Model<IUser>>('users', {
 
 (async () => {
     await userDb.sync()
-    const findAminUser = await userDb.findOne({ where: { userLevel: 1 } })
+    const findAminUser = await userDb.findOne({ where: { userLevel: 1, email: "admin@email.com.br" } })
 
     if (!findAminUser) {
         await userDb.create({

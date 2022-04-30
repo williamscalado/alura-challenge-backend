@@ -1,9 +1,10 @@
-import { ITransactionDataRead, ITrasactionsUploadUseCase, keyCSV } from "../../../domain/transaction"
+import { ITransactionDataRead, ITrasactionsUploadUseCase, IUploadRegisterData, keyCSV } from "../../../domain/transaction"
 import fs from "fs";
 import { parse } from 'csv-parse';
 import path from "path";
 import { pathUpload } from "../../../http/middleware/uploadCsv";
 import { unlinkFile } from '../../../helpers/util'
+import { trasactionsUploadUseRepository } from "../repository";
 
 // adiconar no banco se estiver tudo ok
 
@@ -43,15 +44,34 @@ const verifyFileupload = (fileName: string) => {
                     }
                     return verifyIsNullField
                 })
-
-               resolve(dataFilter)
+                const result = {
+                    dataTransactions: dataFilter,
+                    infoConfig: {
+                        fileName: fileName,
+                        dayTransacions: fileData[0].dateTimerTrasaction
+                    }
+                }
+                resolve(result)
             })
 
     })
     return transactionData;
 }
 
+const verifyDayTransaction = () => {
 
-export const transactionUseCase: ITrasactionsUploadUseCase = {
-    verifyFileupload
+}
+
+const addNewRecord = async (data: IUploadRegisterData) => {
+
+    const dateNow = new Date();
+    await trasactionsUploadUseRepository.addNewRecord(data)
+
+
+}
+
+
+export const transactionUploadUseCase: ITrasactionsUploadUseCase = {
+    verifyFileupload,
+    addNewRecord
 }

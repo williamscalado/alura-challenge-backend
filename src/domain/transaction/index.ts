@@ -10,17 +10,24 @@ export interface ITransactionData {
     transactionAmount: string,
     dateTimerTrasaction: Date,
     createAt: Date,
-    [key: string]: any   
+    [key: string]: any
 }
 
-export interface IUploadRegisterData { 
-    id: string,
+export interface IUploadRegisterData {
+    id?: string,
+    idUser: string,
     dateUpload: Date,
-    dateTransactions: Date,
+    dateTransactions?: Date,
     file: string
 }
 
-
+export interface IResultUpload {
+    dataTransactions: {},
+    infoConfig: {
+        fileName: string,
+        dayTransacions: string
+    }
+}
 
 
 export enum keyCSV {
@@ -37,6 +44,7 @@ export enum keyCSV {
 export interface ITransactionDataRead extends Omit<ITransactionData, "id" | "createAt"> { }
 
 export interface ITrasactionsUploadUseCase {
-    verifyFileupload:  (fileName: string)  => Promise<ITransactionDataRead[]> | any
+    verifyFileupload: (fileName: string) => Promise<ITransactionDataRead[]> | any
+    addNewRecord: (data: IUploadRegisterData) => Promise<void>
 }
 

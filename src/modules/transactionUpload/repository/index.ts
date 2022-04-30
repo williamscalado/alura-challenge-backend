@@ -1,28 +1,11 @@
-import { STRING } from "sequelize";
-import { DATE, INTEGER, Model } from "sequelize";
-import { sequelizeDb } from "../../../config/db";
 import { IUploadRegisterData } from "../../../domain/transaction";
+import { uploadDb } from "./model";
 
+export const addNewRecord = async (data: IUploadRegisterData) => {
+  await uploadDb.sync();
+  await uploadDb.create(data);
+};
 
-export const uploadDb = sequelizeDb.define<Model<IUploadRegisterData>>('transactionUpload', {
-    id: {
-        type: INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    dateUpload: {
-        type: DATE,
-        allowNull: false
-
-    },
-    dateTransactions: {
-        type: DATE,
-        allowNull: false
-
-    },
-    file: {
-        type: STRING,
-        allowNull: false
-    }
-})
-
+export const trasactionsUploadUseRepository = {
+  addNewRecord,
+};

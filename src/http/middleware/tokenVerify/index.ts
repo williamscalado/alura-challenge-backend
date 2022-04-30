@@ -17,3 +17,4 @@ export const isAuthenticatedVeryfi = (req: Request, res: Response, next: NextFun
     }
 
 }
+
