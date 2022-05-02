@@ -1,15 +1,15 @@
-import { ITransactionDataRead, ITrasactionsUploadUseCase, IUploadRegisterData, keyCSV } from "../../../domain/transaction"
+import { ITransactionDataRead, ITransactionsUploadUseCase, IUploadRegisterData, keyCSV } from "../../../domain/transaction"
 import fs from "fs";
 import { parse } from 'csv-parse';
 import path from "path";
 import { pathUpload } from "../../../http/middleware/uploadCsv";
-import { unlinkFile } from '../../../helpers/util'
+import { getUserIdByToken, unlinkFile } from '../../../helpers/util'
 import { trasactionsUploadUseRepository } from "../repository";
 
 // adiconar no banco se estiver tudo ok
 
 
-const verifyFileupload = (fileName: string) => {
+const verifyFileupload = (fileName: string, idUser: string) => {
 
     const transactionData = new Promise((resolve, reject) => {
 
@@ -23,6 +23,7 @@ const verifyFileupload = (fileName: string) => {
                 for (const [key, value] of Object.entries(data)) {
                     dataLineCsv[keyCSV[+key]] = value
                 }
+                dataLineCsv['userId'] = idUser
                 fileData.push(dataLineCsv)
             })
             .on('error', function (err) {
@@ -34,8 +35,8 @@ const verifyFileupload = (fileName: string) => {
                     unlinkFile(fileCSV)
                 }
                 const dataFilter = fileData.filter((response) => {
-                    const firstDateLine = new Date(fileData[0].dateTimerTrasaction).toLocaleDateString()
-                    return firstDateLine == new Date(response.dateTimerTrasaction).toLocaleDateString()
+                    const firstDateLine = new Date(fileData[0].dateTimerTransaction).toLocaleDateString()
+                    return firstDateLine == new Date(response.dateTimerTransaction).toLocaleDateString()
                 })
                 dataFilter.map((data, key) => {
                     const verifyIsNullField = Object.values(data).every(value => !!value);
@@ -48,7 +49,7 @@ const verifyFileupload = (fileName: string) => {
                     dataTransactions: dataFilter,
                     infoConfig: {
                         fileName: fileName,
-                        dayTransacions: fileData[0].dateTimerTrasaction
+                        dayTransacions: fileData[0].dateTimerTransaction
                     }
                 }
                 resolve(result)
@@ -71,7 +72,7 @@ const addNewRecord = async (data: IUploadRegisterData) => {
 }
 
 
-export const transactionUploadUseCase: ITrasactionsUploadUseCase = {
+export const transactionUploadUseCase: ITransactionsUploadUseCase = {
     verifyFileupload,
     addNewRecord
 }

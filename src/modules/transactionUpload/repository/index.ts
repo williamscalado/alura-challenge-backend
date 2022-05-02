@@ -1,4 +1,4 @@
-import { IUploadRegisterData } from "../../../domain/transaction";
+import { IRecordUpload, ITransactionsUploadRepository, IUploadRegisterData } from "../../../domain/transaction";
 import { uploadDb } from "./model";
 
 export const addNewRecord = async (data: IUploadRegisterData) => {
@@ -6,6 +6,16 @@ export const addNewRecord = async (data: IUploadRegisterData) => {
   await uploadDb.create(data);
 };
 
-export const trasactionsUploadUseRepository = {
+const getRecordUpload = async () => {
+  await uploadDb.sync()
+  const result = uploadDb.findAll({
+    attributes: ['id', 'idUser', 'dateTransactions', 'dateUpload']
+  })
+
+  return result
+
+}
+export const trasactionsUploadUseRepository: ITransactionsUploadRepository = {
   addNewRecord,
+  getRecordUpload
 };

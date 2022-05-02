@@ -1,24 +1,34 @@
 import { Request, Response } from "express";
-import { IResultUpload, IUploadRegisterData } from "../../../domain/transaction";
+import { IAddTransactions, IResultUpload, IUploadRegisterData } from "../../../domain/transaction";
 import { transactionUploadUseCase } from "../../../modules/transactionUpload/useCase";
-import { getUserIdByToken } from "../../../helpers/util";
+import { getUserIdByToken, unlinkFile } from "../../../helpers/util";
+import { transactionsUseCase } from "../../../modules/transaction/useCase";
 
-export const transactionsUploadController = async (req: Request, res: Response) => {
+export const addNewTransactionsByUpload = async (req: Request, res: Response) => {
 
     try {
-        if (!req.file) throw 'Não conseguimosenviar o arquivo, tente novamente'
+        if (!req.file) throw 'Não conseguimos enviar o arquivo, tente novamente'
 
         const idUser = getUserIdByToken(req.headers['x-access-token'] as string);
         const nameFile = req.file.filename;
+        const { dataTransactions, infoConfig }: IResultUpload = await transactionUploadUseCase
+            .verifyFileupload(nameFile, idUser as string)
 
-        const { dataTransactions, infoConfig }: IResultUpload = await transactionUploadUseCase.verifyFileupload(nameFile)
+        const dayTransacions = new Date(infoConfig.dayTransacions)
 
         const dataNewResordUpload: IUploadRegisterData = {
             idUser: idUser as string,
             dateUpload: new Date(),
-            dateTransactions: new Date(infoConfig.dayTransacions),
+            dateTransactions: dayTransacions,
             file: infoConfig.fileName
         }
+
+        const dataTtransactions: IAddTransactions = {
+            dataTransactions: dataTransactions as [],
+            dayTransactions: dayTransacions
+        }
+
+        await transactionsUseCase.addTransactions(dataTtransactions);
         await transactionUploadUseCase.addNewRecord(dataNewResordUpload)
 
 
@@ -28,11 +38,32 @@ export const transactionsUploadController = async (req: Request, res: Response) 
             message: "Arquivo foi enviado com sucesso"
         })
 
-    } catch (error) {
+    } catch (error: Error | any) {
+
         res.status(400).json({
             error: true,
-            message: error
+            message: error.message
         })
     }
 
+}
+
+const getRecordUpload = (req: Request, res: Response) => {
+    try {
+
+
+        res.status(200).json({})
+
+    } catch (error: Error | any) {
+        res.status(401).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
+
+export const transactionsUploadController = {
+    addNewTransactionsByUpload,
+    getRecordUpload
 }

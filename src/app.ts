@@ -11,7 +11,7 @@ dotenv.config()
 
 export const app = Express()
 app.use(cors())
-app.use(timedout('20s'))
+app.use(timedout('10s'))
 app.use(Express.json())
 app.use(haltOnTimedout)
 

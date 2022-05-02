@@ -8,10 +8,27 @@ export interface ITransactionData {
     destBranch: string,
     destAccount: string,
     transactionAmount: string,
-    dateTimerTrasaction: Date,
-    createAt: Date,
+    dateTimerTransaction: Date,
     [key: string]: any
 }
+
+
+export enum keyCSV {
+    "origBank" = 0,
+    "origBranch" = 1,
+    "origAccount" = 2,
+    "destBank" = 3,
+    "destBranch" = 4,
+    "destAccount" = 5,
+    "transactionAmount" = 6,
+    "dateTimerTransaction" = 7
+}
+
+export interface IAddTransactions {
+    dataTransactions: [],
+    dayTransactions: Date
+}
+
 
 export interface IUploadRegisterData {
     id?: string,
@@ -29,22 +46,21 @@ export interface IResultUpload {
     }
 }
 
-
-export enum keyCSV {
-    "origBank" = 0,
-    "origBranch" = 1,
-    "origAccount" = 2,
-    "destBank" = 3,
-    "destBranch" = 4,
-    "destAccount" = 5,
-    "transactionAmount" = 6,
-    "dateTimerTrasaction" = 7
+export interface IRecordUpload {
+    id: string,
+    idUser: string,
+    dateTransactions: Date,
+    dateUpload: Date
 }
 
 export interface ITransactionDataRead extends Omit<ITransactionData, "id" | "createAt"> { }
 
-export interface ITrasactionsUploadUseCase {
-    verifyFileupload: (fileName: string) => Promise<ITransactionDataRead[]> | any
+export interface ITransactionsUploadUseCase {
+    verifyFileupload: (fileName: string, idUser: string) => Promise<ITransactionDataRead[]> | any
     addNewRecord: (data: IUploadRegisterData) => Promise<void>
+}
+export interface ITransactionsUploadRepository {
+    addNewRecord: (data: IUploadRegisterData) => Promise<void>,
+    getRecordUpload: () => Promise<IRecordUpload[]> | any
 }
 

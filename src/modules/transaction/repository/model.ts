@@ -3,11 +3,11 @@ import { sequelizeDb } from "../../../config/db";
 import { ITransactionData } from "../../../domain/transaction";
 
 
-export const trasactionsDB = sequelizeDb.define<Model<ITransactionData>>('transactions' , {
+export const transactionsDB = sequelizeDb.define<Model<ITransactionData>>('transactions', {
     id: {
         type: INTEGER,
         autoIncrement: true,
-        primaryKey: true    
+        primaryKey: true
     },
     userId: {
         type: STRING,
@@ -41,12 +41,9 @@ export const trasactionsDB = sequelizeDb.define<Model<ITransactionData>>('transa
         type: STRING,
         allowNull: false
     },
-    dateTimerTrasaction: {
+    dateTimerTransaction: {
         type: DATE,
         allowNull: false
-    },
-    createAt: {
-        type: DATE,
     }
 
 })

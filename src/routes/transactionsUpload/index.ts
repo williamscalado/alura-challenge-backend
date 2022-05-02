@@ -5,4 +5,5 @@ import { uploadMulter } from "../../http/middleware/uploadCsv";
 
 export const transactionsUpload = Router();
 
-transactionsUpload.post('/transactions-upload', [isAuthenticatedVeryfi, uploadMulter.single('fileupload')], transactionsUploadController)
+transactionsUpload.post('/transactions-upload', [isAuthenticatedVeryfi, uploadMulter.single('fileupload')], transactionsUploadController.addNewTransactionsByUpload)
+transactionsUpload.get('/transactions-upload', isAuthenticatedVeryfi, transactionsUploadController.getRecordUpload)
