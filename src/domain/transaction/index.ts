@@ -57,7 +57,8 @@ export interface ITransactionDataRead extends Omit<ITransactionData, "id" | "cre
 
 export interface ITransactionsUploadUseCase {
     verifyFileupload: (fileName: string, idUser: string) => Promise<ITransactionDataRead[]> | any
-    addNewRecord: (data: IUploadRegisterData) => Promise<void>
+    addNewRecord: (data: IUploadRegisterData) => Promise<void>,
+    getRecordUpload: () => Promise<IRecordUpload[]> | any
 }
 export interface ITransactionsUploadRepository {
     addNewRecord: (data: IUploadRegisterData) => Promise<void>,

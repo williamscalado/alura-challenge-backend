@@ -48,11 +48,11 @@ export const addNewTransactionsByUpload = async (req: Request, res: Response) =>
 
 }
 
-const getRecordUpload = (req: Request, res: Response) => {
+const getRecordUpload = async (req: Request, res: Response) => {
     try {
 
-
-        res.status(200).json({})
+        const result = await transactionUploadUseCase.getRecordUpload()
+        res.status(200).json(result)
 
     } catch (error: Error | any) {
         res.status(401).json({

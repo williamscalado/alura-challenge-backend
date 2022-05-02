@@ -72,7 +72,10 @@ const addNewRecord = async (data: IUploadRegisterData) => {
 }
 
 
+const getRecordUpload = async () => await trasactionsUploadUseRepository.getRecordUpload()
+
 export const transactionUploadUseCase: ITransactionsUploadUseCase = {
     verifyFileupload,
-    addNewRecord
+    addNewRecord,
+    getRecordUpload
 }
