@@ -10,7 +10,15 @@ const addTransactions = async (data: IAddTransactions) => {
     await transactionsUseRepository.addTransactions(data.dataTransactions)
 }
 
+const getAllTransactions = async () => {
 
+    const resultData = await transactionsUseRepository.getAllTransactions()
+    if (!resultData) {
+        throw new Error('Lista não contém transações')
+    }
+    return resultData
+}
 export const transactionsUseCase = {
-    addTransactions
+    addTransactions,
+    getAllTransactions
 } 
