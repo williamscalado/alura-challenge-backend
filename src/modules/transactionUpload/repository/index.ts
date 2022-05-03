@@ -3,7 +3,9 @@ import { uploadDb } from "./model";
 
 export const addNewRecord = async (data: IUploadRegisterData) => {
   await uploadDb.sync();
-  await uploadDb.create(data);
+  const result = await uploadDb.create(data);
+  const { id } = result as IRecordUpload | any
+  return id
 };
 
 const getRecordUpload = async () => {

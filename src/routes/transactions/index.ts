@@ -6,3 +6,4 @@ export const transactionRouter = Router()
 
 
 transactionRouter.get('/transactions', isAuthenticatedVeryfi, transactionController.getAllTransactions)
+transactionRouter.get('/transactions/:idUpload', isAuthenticatedVeryfi, transactionController.getByIdUpload)

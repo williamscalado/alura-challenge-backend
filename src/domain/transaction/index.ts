@@ -1,6 +1,7 @@
 export interface ITransactionData {
     id: string,
     userId?: string,
+    idUpload: number,
     origBank: string,
     origBranch: string,
     origAccount: string,
@@ -57,11 +58,11 @@ export interface ITransactionDataRead extends Omit<ITransactionData, "id" | "cre
 
 export interface ITransactionsUploadUseCase {
     verifyFileupload: (fileName: string, idUser: string) => Promise<ITransactionDataRead[]> | any
-    addNewRecord: (data: IUploadRegisterData) => Promise<void>,
+    addNewRecord: (data: IUploadRegisterData) => Promise<number>,
     getRecordUpload: () => Promise<IRecordUpload[]> | any
 }
 export interface ITransactionsUploadRepository {
-    addNewRecord: (data: IUploadRegisterData) => Promise<void>,
+    addNewRecord: (data: IUploadRegisterData) => Promise<IUploadRegisterData> | any,
     getRecordUpload: () => Promise<IRecordUpload[]> | any
 }
 

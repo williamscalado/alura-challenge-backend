@@ -8,8 +8,20 @@ const addTransactions = async (data: ITransactionData[]) => {
 }
 
 const getAllTransactions = async () => {
+
     transactionsDB.sync()
     const result = await transactionsDB.findAll()
+
+    return result
+}
+const getByIdUpload = async (id: number) => {
+
+    transactionsDB.sync()
+    const result = await transactionsDB.findAll({
+        where: {
+            idUpload: id
+        }
+    })
 
     return result
 }
@@ -23,6 +35,7 @@ const findByDayTransactions = async (dayTransactions: Date) => {
 export const transactionsUseRepository = {
     addTransactions,
     findByDayTransactions,
-    getAllTransactions
+    getAllTransactions,
+    getByIdUpload
 }
 

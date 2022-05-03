@@ -66,7 +66,7 @@ const verifyDayTransaction = () => {
 const addNewRecord = async (data: IUploadRegisterData) => {
 
     const dateNow = new Date();
-    await trasactionsUploadUseRepository.addNewRecord(data)
+    return await trasactionsUploadUseRepository.addNewRecord(data)
 
 
 }

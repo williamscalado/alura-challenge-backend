@@ -2,12 +2,17 @@ import { IAddTransactions, ITransactionData } from "../../../domain/transaction"
 import { transactionsUseRepository } from "../repository"
 
 
-const addTransactions = async (data: IAddTransactions) => {
+const addTransactions = async (data: IAddTransactions, idNewRecord: number) => {
 
     const findDay = await transactionsUseRepository.findByDayTransactions(data.dayTransactions as Date)
     if (findDay) throw new Error('Dia da transação já foi realizada sua importação')
+    if (!idNewRecord) throw new Error('Não conseguimos processar sua informação')
 
-    await transactionsUseRepository.addTransactions(data.dataTransactions)
+
+    const dataTransactions = data.dataTransactions
+    dataTransactions.map((res: ITransactionData) => res.idUpload = idNewRecord)
+
+    await transactionsUseRepository.addTransactions(dataTransactions)
 }
 
 const getAllTransactions = async () => {
@@ -18,7 +23,13 @@ const getAllTransactions = async () => {
     }
     return resultData
 }
+const getTransactionsByIdUpload = async (id: number) => {
+
+    const result = await transactionsUseRepository.getByIdUpload(id)
+    return result
+}
 export const transactionsUseCase = {
     addTransactions,
-    getAllTransactions
+    getAllTransactions,
+    getTransactionsByIdUpload
 } 

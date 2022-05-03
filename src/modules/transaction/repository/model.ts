@@ -1,3 +1,4 @@
+import { NUMBER } from "sequelize";
 import { INTEGER, STRING, DATE, Model, InferAttributes, InferCreationAttributes } from "sequelize";
 import { sequelizeDb } from "../../../config/db";
 import { ITransactionData } from "../../../domain/transaction";
@@ -11,6 +12,10 @@ export const transactionsDB = sequelizeDb.define<Model<ITransactionData>>('trans
     },
     userId: {
         type: STRING,
+        allowNull: true
+    },
+    idUpload: {
+        type: NUMBER,
         allowNull: true
     },
     origBank: {

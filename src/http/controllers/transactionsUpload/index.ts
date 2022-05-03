@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IAddTransactions, IResultUpload, IUploadRegisterData } from "../../../domain/transaction";
+import { IAddTransactions, IRecordUpload, IResultUpload, IUploadRegisterData } from "../../../domain/transaction";
 import { transactionUploadUseCase } from "../../../modules/transactionUpload/useCase";
 import { getUserIdByToken, unlinkFile } from "../../../helpers/util";
 import { transactionsUseCase } from "../../../modules/transaction/useCase";
@@ -16,20 +16,21 @@ export const addNewTransactionsByUpload = async (req: Request, res: Response) =>
 
         const dayTransacions = new Date(infoConfig.dayTransacions)
 
-        const dataNewResordUpload: IUploadRegisterData = {
+        const dataNewRecordUpload: IUploadRegisterData = {
             idUser: idUser as string,
             dateUpload: new Date(),
             dateTransactions: dayTransacions,
             file: infoConfig.fileName
         }
 
-        const dataTtransactions: IAddTransactions = {
+        const newDataTransactions: IAddTransactions = {
             dataTransactions: dataTransactions as [],
             dayTransactions: dayTransacions
         }
+        const idNewRecord: number = await transactionUploadUseCase.addNewRecord(dataNewRecordUpload)
 
-        await transactionsUseCase.addTransactions(dataTtransactions);
-        await transactionUploadUseCase.addNewRecord(dataNewResordUpload)
+        await transactionsUseCase.addTransactions(newDataTransactions, idNewRecord);
+
 
 
 
