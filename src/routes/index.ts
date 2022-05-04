@@ -4,10 +4,9 @@ import { transactionRouter } from "./transactions";
 import { transactionsUpload } from "./transactionsUpload";
 import { userRouter } from "./user";
 
+export const appRouter = Router();
 
-export const appRouter = Router()
-
-appRouter.use(transactionsUpload)
-appRouter.use(userRouter)
-appRouter.use(loginRouter)
-appRouter.use(transactionRouter)
+appRouter.use(transactionsUpload);
+appRouter.use(userRouter);
+appRouter.use(loginRouter);
+appRouter.use(transactionRouter);

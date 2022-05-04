@@ -66,6 +66,9 @@ const verifyDayTransaction = () => {
 const addNewRecord = async (data: IUploadRegisterData) => {
 
     const dateNow = new Date();
+    const result = trasactionsUploadUseRepository.findByDayTransactions(data.dateTransactions as Date)
+    if (!result) throw new Error('Data já foi importada!')
+
     return await trasactionsUploadUseRepository.addNewRecord(data)
 
 

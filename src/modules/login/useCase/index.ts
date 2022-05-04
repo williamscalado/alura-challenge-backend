@@ -19,7 +19,7 @@ const findUser = async (data: Ilogin) => {
 
     if (!validatePassword) throw 'Senha digitada está incorreta!'
 
-    const token = jwt.sign({ id: idUser }, `${process.env.PRIVATEKEY}`, { algorithm: 'HS256', expiresIn: '15min' })
+    const token = jwt.sign({ id: idUser }, `${process.env.PRIVATEKEY}`, { algorithm: 'HS256', expiresIn: "1h" })
 
     return token;
 

@@ -17,7 +17,14 @@ const getRecordUpload = async () => {
   return result
 
 }
+
+const findByDayTransactions = async (dayTransactions: Date) => {
+  uploadDb.sync()
+  const result = await uploadDb.findOne({ where: { dateTransactions: dayTransactions } })
+  return result || null
+}
 export const trasactionsUploadUseRepository: ITransactionsUploadRepository = {
   addNewRecord,
-  getRecordUpload
+  getRecordUpload,
+  findByDayTransactions
 };
