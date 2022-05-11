@@ -1,26 +1,29 @@
 export interface IUser {
-    id?: string
-    fullName: string,
-    email: string,
-    password: string,
-    createAt?: Date,
-    userLevel: number,
-    active?: 1 | 0
+	id?: string;
+	fullName: string;
+	email: string;
+	password: string;
+	createAt?: Date;
+	userLevel: number;
+	active?: 1 | 0;
 }
 
-export interface IUserData extends Omit<IUser, "id" | "createAt" | "userLevel" | "password"> { }
+export interface IUserData
+	extends Omit<IUser, "id" | "createAt" | "userLevel" | "password"> {}
+export interface IUserDataUpdate
+	extends Omit<IUser, "id" | "createAt" | "userLevel"> {}
 
 export interface IUserUseCase {
-    findById(id: string): () => IUser[],
-    findByEmail(email: string): () => boolean
-    createUser(data: IUserData): () => void
-    updateUser(id: string, data: IUser): () => void
-    deleteUser(id: string): () => void
+	findById(id: string): () => IUser[];
+	findByEmail(email: string): () => boolean;
+	createUser(data: IUserData): () => void;
+	updateUser(id: string, data: IUser): () => void;
+	deleteUser(id: string): () => void;
 }
 export interface IUserRepository {
-    findById(id: string): () => IUser[],
-    findByEmail(email: string): () => boolean
-    createUser(data: IUserData): () => void
-    updateUser(id: string, data: IUser): () => void
-    deleteUser(id: string): () => void
+	findById(id: string): () => IUser[];
+	findByEmail(email: string): () => boolean;
+	createUser(data: IUserData): () => void;
+	updateUser(id: string, data: IUser): () => void;
+	deleteUser(id: string): () => void;
 }
